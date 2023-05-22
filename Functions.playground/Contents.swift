@@ -38,9 +38,19 @@ func _externalLabelFunction(
 // just a hint before executions: for the "return type" functions , in pure swift code ".swift" files , you will get warnings if you don't consume (use) the return type functions values , but in this playground you won't need to consume them because the playground will do it for you and give you the result on the right hand side.
 // however , to get rid of this warning you must add @discardableResult just before that function , it will discard the warning of only calling the function without assigning it to a variable , it doesn't apply to assigned variable not being used.
 
+// you can have functions inside of functions so it gets declared and invoked in the same function scope , so outside of the parent function , no one can access or call the child function , they can only call the parent function.
+func highOrderFunction(with value: Int) -> Int {
+    // This internal function is only accessible here
+    func mainLogicInternalFunction(value: Int) -> Int {
+        value + 2
+    }
+    return mainLogicInternalFunction(value: value + 3)
+}
 
-//you can have functions inside of functions so it gets declared and invoked in the same function scope , so outside of the parent function , no one can access or call the child function , they can only call the parent function.
-
+// Default value arguments inside functions go as [ argumentName = value ].
+func defaultValueFunction(firstName: String = "Moaz", lastName: String = "Ahmed") -> String {
+    "\(firstName) \(lastName)"
+}
 
 // executions
 myNoArgumentsMethod()
@@ -57,3 +67,11 @@ externalAndInternalFunc(externalLabel: 1)
 // here we are replacing the first/external Label by _
 // which means this is a positional argument now
 _externalLabelFunction("Moaz")
+
+// here we call the high order function which has an internal logic function only accessible inside it.
+highOrderFunction(with: 30)
+
+// calling default arguments value function
+defaultValueFunction()
+// and here we pass arguments , so the default values get ignored
+defaultValueFunction(firstName: "MeYo", lastName: "7allow")
